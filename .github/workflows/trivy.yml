@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: saurabhkr952:go-app:${{ github.sha }}
+          tags: saurabhkr952/go-app:${{ github.sha }}
           
   scan_upload:
     name: Container Vulnerability Check
