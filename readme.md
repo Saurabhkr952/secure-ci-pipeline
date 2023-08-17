@@ -1,1 +1,1 @@
-## creating secure CI Pipeline
+## Creating secure CI Pipeline
