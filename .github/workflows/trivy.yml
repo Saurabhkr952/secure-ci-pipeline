@@ -3,8 +3,7 @@ name: Multi-Stage Workflow
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    
   schedule:
     - cron: '26 15 * * 3'
 
@@ -15,18 +14,23 @@ permissions:
 
 jobs:
   build:
-    name: Build Docker Image
+    name: Build and Push Docker Image
     runs-on: "ubuntu-20.04"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build an image from Dockerfile
-        run: |
-          docker build -t docker.io/saurabhkr952/go-app:${{ github.sha }} .
-
+     -  name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+     -  name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: saurabhkr952:go-app:${{ github.sha }}
+          
   scan_upload:
-    name: Run Trivy Vulnerability Scanner & Upload Results
+    name: Container Vulnerability Check
     needs: build
     runs-on: ubuntu-20.04
     steps:
@@ -36,7 +40,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: 'docker.io/saurabhkr952/go-app:latest'
+          image-ref: 'docker.io/saurabhkr952/go-app:${{ github.sha }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
