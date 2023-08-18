@@ -64,8 +64,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }} # Github Personal Access Token
       - name: setup git config
         run: |
-          git config --global user.email "saurabhkr952@gmail.com"
-          git config --global user.name "saurabhkr952"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           echo ${{ github.sha }}
           sed -i 's+saurabhkr952/dev-portfolio:.*+saurabhkr952/dev-portfolio:${{ github.sha }}+g' deployment.yaml
           git add -A
