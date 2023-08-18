@@ -70,8 +70,12 @@ jobs:
           sed -i 's+saurabhkr952/dev-portfolio:.*+saurabhkr952/dev-portfolio:${{ github.sha }}+g' deployment.yaml
           git add -A
           git commit -m "update image tag for - ${{ github.sha }}"
-      - run: echo ${{ github }}
-      - run: git push origin main        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: saurabhkr952/dev-portfolio
+          force: true       
           
   slack-workflow-status:
     if: always()
