@@ -68,5 +68,5 @@ jobs:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           channel: '#github-workflow'
           name: 'CI/CD Workflow Status'
-          icon_emoji: ':🔄:'
+          icon_emoji: '🔄'
           icon_url: 'https://avatars0.githubusercontent.com/u/1701160?s=96&v=4'
