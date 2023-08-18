@@ -61,7 +61,7 @@ jobs:
         with: 
           repository: saurabhkr952/dev-portfolio-manifest
           ref: 'main'
-          token: ${{ secrets.GITHUB_TOKEN }} # Github Personal Access Token
+          token: ${{ secrets.PAT_TOKEN }} # Github Personal Access Token
       - name: setup git config
         run: |
           git config --local user.email "saurabhkr952@gmail.com"
